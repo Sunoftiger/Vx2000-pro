@@ -1,0 +1,766 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VX2000 Pro Expert | Juanseled</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f5f7fb;--card:#fff;--card2:#eef1f7;--a:#0070c9;--a2:#6d28d9;--a3:#059669;--w:#d97706;--r:#dc2626;--t:#111827;--s:#4b5563;--b:#cbd5e1}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t);font-size:14px}
+.hero{background:linear-gradient(135deg,#059669,#0070c9);padding:28px 16px 20px;text-align:center}
+.hero h1{font-size:clamp(22px,5vw,38px);font-weight:900;color:#fff;margin-bottom:4px}
+.hero p{color:rgba(255,255,255,.85);font-size:12px;margin-bottom:16px}
+.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:8px 14px;text-align:center}
+.sv{font-size:18px;font-weight:900;color:#fff}
+.sl{font-size:9px;color:rgba(255,255,255,.75);letter-spacing:1px}
+nav{display:flex;overflow-x:auto;gap:6px;padding:10px 12px;background:#fff;border-bottom:2px solid var(--b);position:sticky;top:0;z-index:100;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;padding:8px 16px;border-radius:20px;border:1px solid var(--b);background:var(--card2);color:var(--s);font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap;font-weight:600}
+.nb.on{background:var(--a);border-color:var(--a);color:#fff}
+.sec{display:none;padding:14px;max-width:580px;margin:0 auto}
+.sec.on{display:block}
+.card{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ci{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ct{font-size:14px;font-weight:800;color:var(--t)}
+.cs{font-size:11px;color:var(--s)}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--b);font-size:12px}
+.row:last-child{border:none}
+.rl{color:var(--s)}
+.rv{font-weight:700;color:var(--a);text-align:right;max-width:60%}
+.acc{background:var(--card);border:1px solid var(--b);border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.ah{padding:13px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--card2);border-left:4px solid var(--a)}
+.ah h3{font-size:13px;font-weight:700;color:var(--t);display:flex;align-items:center;gap:8px}
+.ar{transition:transform .3s;color:var(--s);font-size:11px}
+.acc.op .ar{transform:rotate(180deg)}
+.ab{display:none;padding:12px 16px;background:var(--card)}
+.acc.op .ab{display:block}
+.tip{display:flex;gap:10px;padding:10px 12px;background:#f0f7ff;border-radius:10px;margin-bottom:8px;border-left:3px solid var(--a3)}
+.ti{font-size:18px;flex-shrink:0}
+.tt{font-size:12px;color:var(--s);line-height:1.6}
+.tt strong{color:var(--t)}
+.warn{background:#fff7ed;padding:10px;border-radius:8px;font-size:12px;color:#92400e;border-left:3px solid var(--w);margin-top:8px}
+.err{background:#fef2f2;padding:10px;border-radius:8px;font-size:12px;color:#991b1b;border-left:3px solid var(--r);margin-top:8px}
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;margin:3px 2px}
+.cb{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe}
+.cp{background:#ede9fe;color:#6d28d9;border:1px solid #ddd6fe}
+.cg{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
+.cy{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.cr{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.pg{height:8px;background:var(--b);border-radius:4px;overflow:hidden;margin:4px 0 10px}
+.pf{height:100%;border-radius:4px}
+.nqb{width:100%;padding:11px;background:var(--card2);border:1px solid var(--b);border-radius:10px;color:var(--t);font-size:12px;cursor:pointer;text-align:left;transition:all .2s;line-height:1.5;margin-bottom:6px}
+.nqb:hover,.nqb.sel{background:#dbeafe;border-color:var(--a)}
+.sbox{position:relative;margin-bottom:14px}
+.sbox input{width:100%;padding:12px 16px 12px 40px;background:var(--card);border:1px solid var(--b);border-radius:12px;color:var(--t);font-size:13px;outline:none}
+.sbox input:focus{border-color:var(--a)}
+.sbox::before{content:'🔍';position:absolute;left:14px;top:50%;transform:translateY(-50%)}
+.sr{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:12px;margin-bottom:8px}
+.sr h4{font-size:13px;font-weight:700;color:var(--a);margin-bottom:4px}
+.sr p{font-size:11px;color:var(--s);line-height:1.5}
+.qo{padding:12px;background:var(--card2);border:1px solid var(--b);border-radius:10px;cursor:pointer;font-size:13px;margin-bottom:8px;text-align:left;width:100%;transition:all .2s}
+.qo:hover{border-color:var(--a);background:#e8f0fe}
+.qo.ok{background:#d1fae5;border-color:var(--a3);color:#065f46}
+.qo.no{background:#fee2e2;border-color:var(--r);color:#991b1b}
+.qbar{height:6px;background:var(--b);border-radius:3px;margin-bottom:14px;overflow:hidden}
+.qbf{height:100%;background:linear-gradient(90deg,var(--a3),var(--a));border-radius:3px;transition:width .5s}
+.qfb{font-size:11px;color:var(--s);margin-top:8px;padding:8px 12px;background:var(--card2);border-radius:8px;border-left:3px solid var(--a);display:none}
+.led-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--b);font-size:12px}
+.led-row:last-child{border:none}
+.led{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.mode-card{background:var(--card2);border:1px solid var(--b);border-radius:10px;padding:10px;text-align:center}
+.mode-card.best{border-color:var(--a3);background:#f0fdf4}
+.mode-name{font-size:11px;font-weight:800;color:var(--a);margin-bottom:4px}
+.mode-val{font-size:20px;font-weight:900;color:var(--t)}
+.mode-lbl{font-size:9px;color:var(--s)}
+footer{text-align:center;padding:24px 16px;color:var(--s);font-size:11px;border-top:1px solid var(--b);margin-top:20px}
+footer strong{color:var(--a)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<p style="color:rgba(255,255,255,.7);font-size:10px;letter-spacing:2px;margin-bottom:6px">⚡ JUANSELED · NOVASTAR EXPERT</p>
+<h1>VX2000 Pro</h1>
+<p>All-in-One Controller · La guía completa para técnicos y compradores</p>
+<div class="stats">
+<div class="stat"><div class="sv">13M</div><div class="sl">Píxeles máx</div></div>
+<div class="stat"><div class="sv">20</div><div class="sl">Puertos RJ45</div></div>
+<div class="stat"><div class="sv">12</div><div class="sl">Capas máx</div></div>
+<div class="stat"><div class="sv">82W</div><div class="sl">Consumo</div></div>
+</div>
+</div>
+
+<nav>
+<button class="nb on" onclick="show('inicio',this)">🏠 Inicio</button>
+<button class="nb" onclick="show('start',this)">🚀 Primeros pasos</button>
+<button class="nb" onclick="show('modos',this)">🔄 3 Modos</button>
+<button class="nb" onclick="show('necesito',this)">❓ ¿Para qué sirve?</button>
+<button class="nb" onclick="show('sos',this)">🆘 No funciona</button>
+<button class="nb" onclick="show('casos',this)">🎬 Casos reales</button>
+<button class="nb" onclick="show('entradas',this)">📥 Entradas</button>
+<button class="nb" onclick="show('salidas',this)">📤 Salidas</button>
+<button class="nb" onclick="show('panel',this)">🎛️ Panel frontal</button>
+<button class="nb" onclick="show('features',this)">✨ Features</button>
+<button class="nb" onclick="show('latencia',this)">⚡ Latencia</button>
+<button class="nb" onclick="show('specs',this)">📋 Specs</button>
+<button class="nb" onclick="show('buscar',this)">🔍 Buscar</button>
+<button class="nb" onclick="show('quiz',this)">🎯 Quiz</button>
+</nav>
+
+<!-- INICIO -->
+<div class="sec on" id="s-inicio">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#d1fae5">🎬</div><div><div class="ct">¿Qué es el VX2000 Pro?</div><div class="cs">NovaStar · All-in-One Controller</div></div></div>
+<p style="font-size:12px;color:var(--s);line-height:1.7">El VX2000 Pro combina procesamiento de video y control de LED en un solo equipo compacto. Con 20 puertos Ethernet y 4 puertos de fibra óptica, maneja hasta 13 millones de píxeles. A diferencia del H5, <strong>no tiene tarjetas modulares</strong> — todo viene integrado. Ideal para rental, stage y pantallas fine-pitch.</p>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dbeafe">🔄</div><div><div class="ct">3 modos de trabajo</div><div class="cs">Un solo equipo, tres roles distintos</div></div></div>
+<div class="mode-grid">
+<div class="mode-card best"><div class="mode-name">Video Controller</div><div style="font-size:22px">🎬</div><div class="mode-lbl">Procesa y controla</div></div>
+<div class="mode-card"><div class="mode-name">Fiber Converter</div><div style="font-size:22px">📡</div><div class="mode-lbl">Convierte a fibra</div></div>
+<div class="mode-card"><div class="mode-name">ByPass</div><div style="font-size:22px">⚡</div><div class="mode-lbl">Latencia 0</div></div>
+</div>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#ede9fe">🎯</div><div><div class="ct">¿Dónde se usa?</div></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:5px">
+<span class="chip cg">🎤 Shows y conciertos</span>
+<span class="chip cb">🎭 Teatro y eventos</span>
+<span class="chip cp">🏢 Rental profesional</span>
+<span class="chip cy">🖥️ Fine-pitch LED</span>
+<span class="chip cg">📡 Instalaciones largas</span>
+<span class="chip cb">🎮 Broadcast / TV</span>
+</div>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#fef3c7">✅</div><div><div class="ct">Certificaciones</div></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:5px">
+<span class="chip cy">CE</span><span class="chip cy">FCC</span><span class="chip cy">IC</span><span class="chip cy">RCM</span><span class="chip cy">EAC</span><span class="chip cy">UL</span><span class="chip cy">CB</span><span class="chip cy">KC</span><span class="chip cy">RoHS</span>
+</div>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#d1fae5">🔌</div><div><div class="ct">Formas de controlar el VX2000 Pro</div></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:5px">
+<span class="chip cb">🎛️ Knob frontal</span>
+<span class="chip cg">🌐 Unico web page</span>
+<span class="chip cp">💻 NovaLCT</span>
+<span class="chip cy">📱 VICP app</span>
+</div>
+</div>
+</div>
+
+<!-- PRIMEROS PASOS -->
+<div class="sec" id="s-start">
+<div class="card" style="border-color:var(--a3)">
+<div class="ch"><div class="ci" style="background:#d1fae5">🚀</div><div><div class="ct">Primeros pasos con el VX2000 Pro</div><div class="cs">De la caja al show — sin miedo</div></div></div>
+</div>
+<div class="acc op"><div class="ah" onclick="tog(this)"><h3><span style="background:var(--a);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900">1</span>Verificar accesorios</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">
+<span class="chip cg">✅ Cable poder</span><span class="chip cg">✅ Cable RJ45</span><span class="chip cg">✅ Cable HDMI</span><span class="chip cg">✅ Cable USB</span><span class="chip cg">✅ 4x tapones silicona</span><span class="chip cg">✅ Conector Phoenix</span><span class="chip cg">✅ Quick Start Guide</span>
+</div>
+<div class="tip"><div class="ti">📦</div><div class="tt">El VX2000 Pro viene en un maletín de transporte de 625×560×195mm. Guardalo siempre ahí para traslados.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3><span style="background:var(--a);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900">2</span>Elegir el modo de trabajo</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">🎬 Video Controller</span><span class="rv">Modo normal — procesa video</span></div>
+<div class="row"><span class="rl">📡 Fiber Converter</span><span class="rv">Solo convierte señal a fibra</span></div>
+<div class="row"><span class="rl">⚡ ByPass</span><span class="rv">Latencia 0 — sin procesamiento</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🎛️</div><div class="tt"><strong>Desde el knob frontal:</strong> Menú → Working Mode → seleccioná el modo. También desde la web Unico.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3><span style="background:var(--a);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900">3</span>Conectar a la red — Unico web</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Puertos control</span><span class="rv">2x ETHERNET traseros</span></div>
+<div class="row"><span class="rl">Software web</span><span class="rv">Unico (sin instalar nada)</span></div>
+<div class="row"><span class="rl">También</span><span class="rv">NovaLCT o VICP app</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">💻</div><div class="tt"><strong>Unico:</strong> abrí el browser, escribí la IP del VX2000 Pro. Desde ahí controlás todo — capas, presets, brillo.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3><span style="background:var(--a);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900">4</span>Conectar la fuente de video</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">PC moderna / alta res</span><span class="rv">HDMI 2.0 o DP 1.2 → 4K@60</span></div>
+<div class="row"><span class="rl">PC estándar</span><span class="rv">HDMI 1.3 → 1080@60</span></div>
+<div class="row"><span class="rl">Cámara broadcast</span><span class="rv">12G-SDI → 4K@60</span></div>
+<div class="row"><span class="rl">Desde fibra (otro equipo)</span><span class="rv">OPT 1 o OPT 2 (auto)</span></div>
+<div class="row"><span class="rl">Desde USB</span><span class="rv">U-DISK frontal → plug & play</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🟢</div><div class="tt"><strong>Botones de entrada (frente):</strong> Azul fijo = señal OK y en uso. Blanco fijo = no hay señal.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3><span style="background:var(--a);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900">5</span>Conectar la pantalla LED</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Cable</span><span class="rv">RJ45 desde puertos OUTPUT</span></div>
+<div class="row"><span class="rl">Máx por puerto @ 8-bit</span><span class="rv">650,000 px</span></div>
+<div class="row"><span class="rl">Total puertos</span><span class="rv">20 puertos Gigabit</span></div>
+<div class="row"><span class="rl">Distancia larga</span><span class="rv">OPT 3 / OPT 4 por fibra</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">📐</div><div class="tt"><strong>Calculá:</strong> Total px de tu pantalla ÷ 650,000 = cantidad de puertos RJ45 necesarios.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3><span style="background:var(--a);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900">6</span>Configurar desde Unico</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">1. Configurar pantalla</span><span class="rv">Screen → nueva pantalla</span></div>
+<div class="row"><span class="rl">2. Abrir capas</span><span class="rv">Botones LAYER 1/2/3 del frente</span></div>
+<div class="row"><span class="rl">3. Asignar fuente</span><span class="rv">Botones de entrada o Unico</span></div>
+<div class="row"><span class="rl">4. Guardar preset</span><span class="rv">Botón PRESET → guardar</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">⚡</div><div class="tt"><strong>Preset de emergencia:</strong> siempre guardá uno con pantalla negra antes del show. Un botón y queda prolijo.</div></div>
+<div class="tip"><div class="ti">🔒</div><div class="tt"><strong>Bloqueo de panel:</strong> Mantené knob + BACK 3 segundos para bloquear los botones frontales. Evita toques accidentales.</div></div>
+</div></div>
+</div>
+
+<!-- 3 MODOS -->
+<div class="sec" id="s-modos">
+<div class="card" style="border-color:var(--a)">
+<div class="ch"><div class="ci" style="background:#dbeafe">🔄</div><div><div class="ct">Los 3 modos del VX2000 Pro</div><div class="cs">Elegí el correcto para tu proyecto</div></div></div>
+<p style="font-size:12px;color:var(--s);line-height:1.7">El VX2000 Pro no es solo un controlador — tiene tres personalidades. Elegir el modo correcto cambia completamente la latencia y las funciones disponibles.</p>
+</div>
+<div class="acc op"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a)"><h3>🎬 Video Controller — Modo principal</h3><span class="ar">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);margin-bottom:10px;line-height:1.6">El modo completo. Procesamiento de video, capas, presets, color, escalado — todo disponible.</p>
+<div class="row"><span class="rl">Latencia low latency</span><span class="rv">1~2 frames</span></div>
+<div class="row"><span class="rl">Latencia normal</span><span class="rv">2~3 frames</span></div>
+<div class="row"><span class="rl">Capas disponibles</span><span class="rv">12 capas 2K×1K</span></div>
+<div class="row"><span class="rl">Presets</span><span class="rv">256 presets</span></div>
+<div class="row"><span class="rl">Genlock compatible</span><span class="rv">✓ Sí</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🎯</div><div class="tt"><strong>Cuándo usarlo:</strong> Shows, eventos, instalaciones donde necesitás capas, presets y control total.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a3)"><h3>⚡ ByPass — Latencia cero</h3><span class="ar">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);margin-bottom:10px;line-height:1.6">El VX2000 Pro actúa como un "cable inteligente". Sin procesamiento de video — solo transmite la señal con latencia 0.</p>
+<div class="row"><span class="rl">Latencia</span><span class="rv" style="color:var(--a3)">0 frames</span></div>
+<div class="row"><span class="rl">Procesamiento de video</span><span class="rv" style="color:var(--r)">❌ No disponible</span></div>
+<div class="row"><span class="rl">Low latency + Genlock simultáneos</span><span class="rv" style="color:var(--r)">❌ No compatibles</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🎯</div><div class="tt"><strong>Cuándo usarlo:</strong> Cuando la sincronización perfecta con audio es crítica, o cuando no necesitás procesamiento.</div></div>
+<div class="warn">⚠️ En ByPass, el procesamiento de video queda completamente deshabilitado.</div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a2)"><h3>📡 Fiber Converter — Solo fibra</h3><span class="ar">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);margin-bottom:10px;line-height:1.6">El VX2000 Pro actúa como conversor de fibra óptica puro. Ideal para extender la señal a grandes distancias.</p>
+<div class="row"><span class="rl">Latencia</span><span class="rv" style="color:var(--a3)">0 frames</span></div>
+<div class="row"><span class="rl">Uso</span><span class="rv">Recibe por fibra → envía por Ethernet</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🎯</div><div class="tt"><strong>Cuándo usarlo:</strong> Cuando el controlador principal está lejos y necesitás extender la señal por fibra hasta la pantalla.</div></div>
+</div></div>
+
+<div class="card" style="margin-top:4px">
+<div class="ch"><div class="ci" style="background:#fef3c7">⚠️</div><div><div class="ct">Funciones exclusivas entre sí</div><div class="cs">Combinaciones que NO funcionan juntas</div></div></div>
+<div class="err" style="margin:0"><strong>3D + Input crop:</strong> No pueden activarse al mismo tiempo.</div>
+<div class="err" style="margin-top:6px"><strong>Low Latency + Genlock en ByPass:</strong> Son mutuamente excluyentes en modo ByPass. En modo Video Controller sí son compatibles.</div>
+<div class="tip" style="margin-top:8px"><div class="ti">⚠️</div><div class="tt"><strong>3D reduce capacidad:</strong> Activar 3D divide la capacidad de salida a la mitad.</div></div>
+</div>
+</div>
+
+<!-- QUE NECESITO -->
+<div class="sec" id="s-necesito">
+<div class="card" style="border-color:var(--a2)">
+<div class="ch"><div class="ci" style="background:#ede9fe">❓</div><div><div class="ct">¿Para qué me sirve el VX2000 Pro?</div><div class="cs">Respondé y te decimos si es el equipo correcto</div></div></div>
+</div>
+<div class="card" id="nq1">
+<p style="font-weight:700;margin-bottom:10px">1️⃣ ¿Cuál es tu principal necesidad?</p>
+<div style="display:flex;flex-direction:column;gap:6px">
+<button class="nqb" onclick="sN('need','show',this)">🎤 Controlar pantalla LED en shows/eventos<br><span style="font-size:10px;color:var(--s)">Con capas, presets y control en vivo</span></button>
+<button class="nqb" onclick="sN('need','fiber',this)">📡 Extender señal por fibra óptica larga distancia<br><span style="font-size:10px;color:var(--s)">El controlador está lejos de la pantalla</span></button>
+<button class="nqb" onclick="sN('need','bypass',this)">⚡ Máxima sincronización audio-video (latencia 0)<br><span style="font-size:10px;color:var(--s)">Shows musicales críticos</span></button>
+<button class="nqb" onclick="sN('need','fixed',this)">🏢 Instalación fija: lobby, sala de reuniones<br><span style="font-size:10px;color:var(--s)">Contenido programado y estable</span></button>
+</div>
+</div>
+<div class="card" id="nq2" style="opacity:.3;pointer-events:none;transition:all .3s">
+<p style="font-weight:700;margin-bottom:10px">2️⃣ ¿Cuántos píxeles tiene tu pantalla?</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<button class="nqb" onclick="sN('px','small',this)">🟢 Hasta 5M px</button>
+<button class="nqb" onclick="sN('px','mid',this)">🟡 5M a 10M px</button>
+<button class="nqb" onclick="sN('px','large',this)">🟠 10M a 13M px</button>
+<button class="nqb" onclick="sN('px','xlarge',this)">🔴 Más de 13M px<br><span style="font-size:10px;color:var(--s)">El VX2000 Pro tiene un límite</span></button>
+</div>
+</div>
+<div id="nq-res" style="display:none">
+<div class="card" style="border-color:var(--a3);background:#f0fdf4">
+<div class="ch"><div class="ci" style="background:#d1fae5">✅</div><div><div class="ct">Tu recomendación</div></div></div>
+<div id="nq-body"></div>
+<button onclick="resetN()" style="width:100%;margin-top:12px;padding:10px;background:var(--card2);border:1px solid var(--b);border-radius:10px;color:var(--s);font-size:12px;cursor:pointer">🔄 Volver a calcular</button>
+</div></div>
+</div>
+
+<!-- SOS -->
+<div class="sec" id="s-sos">
+<div class="card" style="border-color:var(--r)">
+<div class="ch"><div class="ci" style="background:#fee2e2">🆘</div><div><div class="ct">Algo no funciona</div><div class="cs">Tocá tu problema — solución inmediata</div></div></div>
+</div>
+<div class="acc op"><div class="ah" onclick="tog(this)" style="border-left-color:var(--r)"><h3>🖤 Pantalla LED completamente negra</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="tip"><div class="ti">1️⃣</div><div class="tt"><strong>Verificá el cable RJ45</strong> entre el puerto de salida del VX2000 Pro y la tarjeta receptora del gabinete. Causa #1.</div></div>
+<div class="tip"><div class="ti">2️⃣</div><div class="tt"><strong>Modo de trabajo:</strong> En ByPass o Fiber Converter, la pantalla no muestra imagen si no hay señal de entrada activa.</div></div>
+<div class="tip"><div class="ti">3️⃣</div><div class="tt"><strong>Unico web:</strong> verificá que la pantalla esté configurada y que la capa tenga una fuente asignada.</div></div>
+<div class="tip"><div class="ti">4️⃣</div><div class="tt"><strong>Resolución:</strong> la resolución configurada debe coincidir exactamente con el tamaño real de la pantalla en píxeles.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--w)"><h3>📵 No aparece la señal de entrada</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="tip"><div class="ti">1️⃣</div><div class="tt"><strong>Botón de entrada en el frente:</strong> Azul fijo = señal OK. Blanco = sin señal. Si parpadea azul rápido = fuente en uso pero sin señal.</div></div>
+<div class="tip"><div class="ti">2️⃣</div><div class="tt"><strong>OPT 1/2:</strong> son auto-adaptativos. Si conectaste un dispositivo de salida en OPT1, el equipo lo toma como salida, no entrada.</div></div>
+<div class="tip"><div class="ti">3️⃣</div><div class="tt"><strong>Señal entrelazada:</strong> HDMI y DP no soportan señal interlaced. Solo 12G-SDI lo soporta.</div></div>
+<div class="tip"><div class="ti">4️⃣</div><div class="tt"><strong>Resolución de la PC:</strong> probá con 1920×1080@60Hz para descartar incompatibilidad de resolución.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a)"><h3>🌐 No puedo conectarme a Unico</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="tip"><div class="ti">1️⃣</div><div class="tt"><strong>Puerto correcto:</strong> conectate a los 2 puertos ETHERNET del panel de control trasero, no a los 20 puertos de salida.</div></div>
+<div class="tip"><div class="ti">2️⃣</div><div class="tt"><strong>LED del puerto:</strong> LED superior izquierdo encendido = conexión OK. Parpadeando = conexión inestable.</div></div>
+<div class="tip"><div class="ti">3️⃣</div><div class="tt"><strong>Verificá la IP</strong> desde el LCD + knob frontal: Menú → Network Settings.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a2)"><h3>🎨 Imagen con colores incorrectos</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="tip"><div class="ti">1️⃣</div><div class="tt"><strong>Color space:</strong> verificá que la fuente y el VX2000 Pro estén en el mismo espacio de color (RGB vs YCbCr).</div></div>
+<div class="tip"><div class="ti">2️⃣</div><div class="tt"><strong>Resetear color:</strong> desde Unico → Screen → Color → restaurar valores default de brillo, saturación, contraste y hue.</div></div>
+<div class="tip"><div class="ti">3️⃣</div><div class="tt"><strong>Calibración:</strong> el VX2000 Pro soporta calibración pixel a pixel con NovaLCT. Si los colores varían entre gabinetes, hacé una calibración.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a3)"><h3>📼 El USB no reproduce</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="tip"><div class="ti">1️⃣</div><div class="tt"><strong>Formato del USB:</strong> debe ser NTFS, FAT32 o exFAT. Partición única solamente.</div></div>
+<div class="tip"><div class="ti">2️⃣</div><div class="tt"><strong>Formato de video:</strong> solo MP4 con codificación H.264 o H.265. Otros formatos no funcionan.</div></div>
+<div class="tip"><div class="ti">3️⃣</div><div class="tt"><strong>Resolución del video:</strong> máximo 3840×2160. Videos de mayor resolución no se reproducen.</div></div>
+<div class="tip"><div class="ti">4️⃣</div><div class="tt"><strong>Activar USB:</strong> mantené presionado el botón U-DISK del frente para entrar al modo de reproducción.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--r)"><h3>🔄 La imagen tiene tearing o se congela</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="tip"><div class="ti">1️⃣</div><div class="tt"><strong>Output synchronization:</strong> activá la sincronización de salida en Unico para que todos los puertos salgan al mismo tiempo.</div></div>
+<div class="tip"><div class="ti">2️⃣</div><div class="tt"><strong>Genlock:</strong> si tenés múltiples VX2000 Pro en cascada, usá Genlock para sincronizarlos a todos.</div></div>
+<div class="tip"><div class="ti">3️⃣</div><div class="tt"><strong>Botón FREEZE:</strong> si la imagen quedó congelada deliberadamente, presioná FREEZE nuevamente para descongelarla.</div></div>
+</div></div>
+<div class="card" style="margin-top:4px;border-color:var(--a2)">
+<div class="ch"><div class="ci" style="background:#ede9fe">💬</div><div><div class="ct">¿Nada funcionó?</div></div></div>
+<div class="tip"><div class="ti">📋</div><div class="tt"><strong>Antes de llamar:</strong> anotá versión firmware (Unico → About), modo de trabajo activo y descripción exacta del problema.</div></div>
+<div class="tip"><div class="ti">🌐</div><div class="tt"><strong>NovaStar:</strong> support@novastar.tech</div></div>
+</div>
+</div>
+
+<!-- CASOS REALES -->
+<div class="sec" id="s-casos">
+<div class="card" style="border-color:var(--a2)">
+<div class="ch"><div class="ci" style="background:#ede9fe">🎬</div><div><div class="ct">Casos reales de uso</div><div class="cs">Configuraciones listas para copiar</div></div></div>
+</div>
+<div class="acc op"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a2)"><h3>🎤 Show en vivo / Concierto</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Modo</span><span class="rv">Video Controller</span></div>
+<div class="row"><span class="rl">Fuente 1</span><span class="rv">HDMI 2.0 — PC producción</span></div>
+<div class="row"><span class="rl">Fuente 2</span><span class="rv">12G-SDI — cámara en vivo</span></div>
+<div class="row"><span class="rl">Capas</span><span class="rv">Capa 1: fondo / Capa 2: cámara PIP</span></div>
+<div class="row"><span class="rl">Latencia</span><span class="rv">Low latency activado</span></div>
+<div class="row"><span class="rl">Presets</span><span class="rv">Intro / Show / Bis / Emergencia</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">📱</div><div class="tt"><strong>VICP app:</strong> operá los presets desde el celular en la platea sin ir al rack.</div></div>
+<div class="tip"><div class="ti">🔒</div><div class="tt"><strong>Bloquear panel:</strong> una vez configurado, bloqueá los botones frontales para evitar toques accidentales.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a)"><h3>📡 Pantalla lejana — más de 100 metros</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Modo OPT</span><span class="rv">Output: OPT 1/2 envían a Ethernet</span></div>
+<div class="row"><span class="rl">Backup</span><span class="rv">OPT 3/4 respaldan OPT 1/2</span></div>
+<div class="row"><span class="rl">OPT 3</span><span class="rv">Copia/respalda puertos 1~10</span></div>
+<div class="row"><span class="rl">OPT 4</span><span class="rv">Copia/respalda puertos 11~20</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🔁</div><div class="tt"><strong>End-to-End backup:</strong> si OPT 1 falla, OPT 3 toma el control automáticamente. La pantalla no se apaga.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a3)"><h3>🏢 Instalación fija / Lobby</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Modo</span><span class="rv">Video Controller</span></div>
+<div class="row"><span class="rl">Fuente</span><span class="rv">HDMI 2.0 — PC contenido</span></div>
+<div class="row"><span class="rl">USB</span><span class="rv">Reproducción directa plug & play</span></div>
+<div class="row"><span class="rl">Presets</span><span class="rv">Por horario automático</span></div>
+<div class="row"><span class="rl">Brillo auto</span><span class="rv">Light sensor conectado</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">💡</div><div class="tt"><strong>Light sensor:</strong> conectá el sensor de luz al puerto LIGHT SENSOR trasero. El brillo se ajusta automáticamente según la iluminación del ambiente.</div></div>
+<div class="tip"><div class="ti">💾</div><div class="tt"><strong>Data saving:</strong> si se va la luz, al volver el equipo restaura automáticamente la configuración previa.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--w)"><h3>🎭 Teatro / Producción escénica</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Modo</span><span class="rv">ByPass (latencia 0)</span></div>
+<div class="row"><span class="rl">Fuente</span><span class="rv">DP 1.2 — servidor de video</span></div>
+<div class="row"><span class="rl">Latencia</span><span class="rv" style="color:var(--a3)">0 frames</span></div>
+<div class="row"><span class="rl">Sincronía audio</span><span class="rv">Perfecta</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">⏱️</div><div class="tt"><strong>ByPass = latencia 0:</strong> la imagen en pantalla es perfectamente simultánea con el audio. Ideal para teatro donde sincronía es crítica.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)" style="border-left-color:var(--a2)"><h3>📺 Mosaic — pantalla ultra ancha</h3><span class="ar">▼</span></div>
+<div class="ab">
+<p style="font-size:11px;color:var(--s);margin-bottom:10px;line-height:1.6">Cuando tu fuente de video no tiene suficiente resolución para cubrir toda la pantalla, el VX2000 Pro puede combinar múltiples entradas en mosaic.</p>
+<div class="row"><span class="rl">HDMI mosaic</span><span class="rv">2x HDMI 2.0 o 4x HDMI 1.3</span></div>
+<div class="row"><span class="rl">Resolución máx mosaic</span><span class="rv">4K×2K</span></div>
+<div class="row"><span class="rl">Fibra mosaic</span><span class="rv">OPT 1 + OPT 2 combinados</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">📐</div><div class="tt"><strong>Ejemplo:</strong> pantalla de 7680×2160 → usás 2x HDMI 2.0 en mosaic, cada una entrega 3840×2160.</div></div>
+</div></div>
+</div>
+
+<!-- ENTRADAS -->
+<div class="sec" id="s-entradas">
+<div class="card"><div class="ch"><div class="ci" style="background:#dbeafe">📥</div><div><div class="ct">Conectores de Entrada</div><div class="cs">Todas las fuentes soportadas</div></div></div></div>
+<div class="acc op"><div class="ah" onclick="tog(this)"><h3>⭐ HDMI 2.0 (×2) — Mayor resolución</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Resolución máx</span><span class="rv">4096×2160@60Hz</span></div>
+<div class="row"><span class="rl">Compatible con</span><span class="rv">HDMI 1.4 y HDMI 1.3</span></div>
+<div class="row"><span class="rl">Bit depth</span><span class="rv">8 / 10 / 12-bit</span></div>
+<div class="row"><span class="rl">HDCP</span><span class="rv">1.4 y 2.2</span></div>
+<div class="row"><span class="rl">Audio</span><span class="rv">✓ Acompañado</span></div>
+<div class="row"><span class="rl">Custom ancho máx</span><span class="rv">8192 px</span></div>
+<div class="row"><span class="rl">Mosaic</span><span class="rv">2x HDMI 2.0 → hasta 4K×2K</span></div>
+<div class="warn">⚠️ No soporta señal entrelazada (interlaced).</div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>🔷 DP 1.2 (×1)</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Resolución máx</span><span class="rv">4096×2160@60Hz</span></div>
+<div class="row"><span class="rl">Bit depth</span><span class="rv">8 / 10 / 12-bit</span></div>
+<div class="row"><span class="rl">HDCP</span><span class="rv">1.3</span></div>
+<div class="row"><span class="rl">Custom ancho máx</span><span class="rv">8192 px</span></div>
+<div class="row"><span class="rl">Audio</span><span class="rv">✓ Acompañado</span></div>
+<div class="warn">⚠️ No soporta señal entrelazada.</div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>📺 HDMI 1.3 (×4)</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Resolución máx</span><span class="rv">1920×1080@60Hz</span></div>
+<div class="row"><span class="rl">Bit depth</span><span class="rv">8-bit</span></div>
+<div class="row"><span class="rl">HDCP</span><span class="rv">1.4</span></div>
+<div class="row"><span class="rl">Mosaic</span><span class="rv">4x HDMI 1.3 → hasta 4K×2K</span></div>
+<div class="row"><span class="rl">Audio</span><span class="rv">✓ Acompañado</span></div>
+<div class="warn">⚠️ No soporta señal entrelazada.</div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>📡 12G-SDI (×1)</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Resolución máx</span><span class="rv">4096×2160@60Hz</span></div>
+<div class="row"><span class="rl">Estándares</span><span class="rv">ST-2082/ST-2081/ST-424/ST-292/ST-259</span></div>
+<div class="row"><span class="rl">Loop output</span><span class="rv">✓ 12G-SDI LOOP</span></div>
+<div class="row"><span class="rl">De-interlacing</span><span class="rv">✓ Soportado</span></div>
+<div class="warn">⚠️ No permite configurar resolución ni bit depth manualmente.</div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>🔄 OPT 1/2 — Auto-adaptativo</h3><span class="ar">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);margin-bottom:10px;line-height:1.6">Los puertos OPT 1 y OPT 2 son inteligentes — detectan automáticamente si están conectados a una fuente (entrada) o a una pantalla (salida).</p>
+<div class="row"><span class="rl">Como entrada</span><span class="rv">Recibe señal desde otro equipo por fibra</span></div>
+<div class="row"><span class="rl">Como salida</span><span class="rv">Envía señal a pantalla por fibra</span></div>
+<div class="row"><span class="rl">Mosaic fibra</span><span class="rv">OPT1 + OPT2 combinados</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">💡</div><div class="tt"><strong>Sin configuración:</strong> el equipo detecta automáticamente el modo según el dispositivo conectado.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>💾 USB 3.0 — Reproducción directa</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Sistema de archivos</span><span class="rv">NTFS / FAT32 / exFAT</span></div>
+<div class="row"><span class="rl">Video formato</span><span class="rv">MP4 (H.264 / H.265)</span></div>
+<div class="row"><span class="rl">Imagen formato</span><span class="rv">jpg / jpeg / png / bmp</span></div>
+<div class="row"><span class="rl">Resolución máx video</span><span class="rv">3840×2160</span></div>
+<div class="row"><span class="rl">H.264 frame rate máx</span><span class="rv">3840×2160@30fps</span></div>
+<div class="row"><span class="rl">H.265 frame rate máx</span><span class="rv">3840×2160@60fps</span></div>
+<div class="row"><span class="rl">Resolución fija USB</span><span class="rv">3840×2160@60Hz</span></div>
+<div class="row"><span class="rl">Transiciones</span><span class="rv">20+ efectos (ripple, zoom, flip...)</span></div>
+</div></div>
+</div>
+
+<!-- SALIDAS -->
+<div class="sec" id="s-salidas">
+<div class="card"><div class="ch"><div class="ci" style="background:#d1fae5">📤</div><div><div class="ct">Conectores de Salida</div><div class="cs">20 RJ45 + 4 OPT + Monitor + 3D</div></div></div></div>
+<div class="acc op"><div class="ah" onclick="tog(this)"><h3>🔌 20x Ethernet — Salida principal LED</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Carga máxima total</span><span class="rv" style="color:var(--a3)">13,000,000 px</span></div>
+<div class="row"><span class="rl">Ancho máximo</span><span class="rv">16,384 px</span></div>
+<div class="row"><span class="rl">Alto máximo</span><span class="rv">8,192 px</span></div>
+<div class="row"><span class="rl">Por puerto @ 8-bit</span><span class="rv">650,000 px</span></div>
+<div class="row"><span class="rl">Backup entre puertos</span><span class="rv">✓ End-to-End</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">📐</div><div class="tt"><strong>Calculá:</strong> px de tu pantalla ÷ 650,000 = puertos necesarios. Máx 20 puertos.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>📡 4x OPT — Fibra óptica</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">OPT 1/2</span><span class="rv">Auto-adaptativo (entrada o salida)</span></div>
+<div class="row"><span class="rl">OPT 3</span><span class="rv">Copia/backup puertos 1~10</span></div>
+<div class="row"><span class="rl">OPT 4</span><span class="rv">Copia/backup puertos 11~20</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🔵</div><div class="tt"><strong>Modo Input+Output:</strong> OPT 1/2 entrada de fibra, OPT 3/4 copia/backup de los Ethernet.</div></div>
+<div class="tip"><div class="ti">🟡</div><div class="tt"><strong>Modo Input+Loop+Output:</strong> OPT 1 entrada, OPT 2 loop out, OPT 3/4 backup.</div></div>
+<div class="tip"><div class="ti">🟢</div><div class="tt"><strong>Modo Output:</strong> OPT 1/2 envían el output de los Ethernet, OPT 3/4 los copian/respaldan.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>👁️ HDMI 1.3 — Monitor de preview</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Función</span><span class="rv">Solo monitoring display</span></div>
+<div class="row"><span class="rl">Resolución fija</span><span class="rv">1920×1080@60Hz</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">💡</div><div class="tt">Conectá un monitor externo acá para ver el estado del equipo en tiempo real desde el rack.</div></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>🕶️ Puerto 3D</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Función</span><span class="rv">Emisor 3D de terceros</span></div>
+<div class="row"><span class="rl">También compatible</span><span class="rv">EMT200 por Ethernet</span></div>
+<div class="warn">⚠️ Activar 3D reduce la capacidad de salida a la mitad.</div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>🔊 Audio 3.5mm</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Entrada</span><span class="rv">1x 3.5mm independiente</span></div>
+<div class="row"><span class="rl">Salida</span><span class="rv">1x 3.5mm independiente</span></div>
+<div class="row"><span class="rl">Sampling rate máx</span><span class="rv">48 kHz</span></div>
+<div class="row"><span class="rl">Volumen</span><span class="rv">Ajustable</span></div>
+</div></div>
+</div>
+
+<!-- PANEL FRONTAL -->
+<div class="sec" id="s-panel">
+<div class="card"><div class="ch"><div class="ci" style="background:#fef3c7">🎛️</div><div><div class="ct">Panel Frontal</div><div class="cs">Guía de botones e indicadores LED</div></div></div></div>
+
+<div class="acc op"><div class="ah" onclick="tog(this)"><h3>1️⃣ Botones de entrada — Estado de señal</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="led-row"><div class="led" style="background:#fff;border:1px solid #ccc"></div><span style="color:var(--s)"><strong>Blanco fijo:</strong> Fuente no usada, sin señal</span></div>
+<div class="led-row"><div class="led" style="background:#3b82f6;animation:pulse .3s infinite alternate"></div><span style="color:var(--s)"><strong>Azul parpadeo rápido:</strong> Fuente en uso, sin señal</span></div>
+<div class="led-row"><div class="led" style="background:#93c5fd"></div><span style="color:var(--s)"><strong>Azul parpadeo lento:</strong> Fuente no usada, hay señal</span></div>
+<div class="led-row"><div class="led" style="background:#1d4ed8"></div><span style="color:var(--s)"><strong>Azul fijo:</strong> Fuente en uso y hay señal ✅</span></div>
+<div class="tip" style="margin-top:8px"><div class="ti">💡</div><div class="tt">En la pantalla home, si la capa 1 está abierta, podés presionar un botón de entrada para cambiar la fuente de esa capa directamente.</div></div>
+</div></div>
+
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>2️⃣ LCD + Knob — Navegación</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">LCD</span><span class="rv">Estado, menús y mensajes</span></div>
+<div class="row"><span class="rl">Girar knob</span><span class="rv">Navegar / ajustar valor</span></div>
+<div class="row"><span class="rl">Presionar knob</span><span class="rv">Confirmar selección</span></div>
+<div class="row"><span class="rl">Botón BACK</span><span class="rv">Salir / cancelar</span></div>
+<div class="tip" style="margin-top:10px"><div class="ti">🔒</div><div class="tt"><strong>Bloqueo:</strong> Knob + BACK simultáneos por 3 segundos = bloquea/desbloquea todos los botones del frente.</div></div>
+</div></div>
+
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>3️⃣ Botones LAYER — Capas</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="led-row"><div class="led" style="background:#1d4ed8"></div><span style="color:var(--s)"><strong>Azul fijo:</strong> Capa abierta</span></div>
+<div class="led-row"><div class="led" style="background:#93c5fd"></div><span style="color:var(--s)"><strong>Azul parpadeando:</strong> Capa en edición</span></div>
+<div class="led-row"><div class="led" style="background:#fff;border:1px solid #ccc"></div><span style="color:var(--s)"><strong>Blanco fijo:</strong> Capa cerrada</span></div>
+<div class="row" style="margin-top:8px"><span class="rl">SCALE</span><span class="rv">Full screen de la capa de menor prioridad</span></div>
+<div class="tip" style="margin-top:8px"><div class="ti">📼</div><div class="tt"><strong>En modo USB:</strong> LAYER 1 = play/pause, LAYER 2 = stop, LAYER 3 = anterior, SCALE = siguiente.</div></div>
+</div></div>
+
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>4️⃣ Botones de Función</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">PRESET</span><span class="rv">Acceder a menú de presets</span></div>
+<div class="row"><span class="rl">TEST</span><span class="rv">Patrones de prueba</span></div>
+<div class="row"><span class="rl">FREEZE</span><span class="rv">Congelar / descongelar imagen</span></div>
+<div class="row"><span class="rl">FN</span><span class="rv">Función personalizable</span></div>
+</div></div>
+</div>
+
+<!-- FEATURES -->
+<div class="sec" id="s-features">
+<div class="acc op"><div class="ah" onclick="tog(this)"><h3>🎬 Capas y presets</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Capas máximas</span><span class="rv">12 × 2K×1K</span></div>
+<div class="row"><span class="rl">Capa 4K×2K</span><span class="rv">Usa 4 recursos de capa 2K</span></div>
+<div class="row"><span class="rl">Capa 4K×1K</span><span class="rv">Usa 2 recursos de capa 2K</span></div>
+<div class="row"><span class="rl">Presets máximos</span><span class="rv">256</span></div>
+<div class="row"><span class="rl">Preview de preset</span><span class="rv">✓ Desde Unico web</span></div>
+<div class="row"><span class="rl">Carga de preset</span><span class="rv">Un solo botón</span></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>🔁 Backup End-to-End</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="tip"><div class="ti">🔴</div><div class="tt"><strong>Backup entre devices:</strong> segundo VX2000 Pro toma el control si el principal falla.</div></div>
+<div class="tip"><div class="ti">🟠</div><div class="tt"><strong>Backup entre fuentes:</strong> si la fuente principal falla, cambia automáticamente a la fuente de respaldo.</div></div>
+<div class="tip"><div class="ti">🟡</div><div class="tt"><strong>Backup entre puertos Ethernet:</strong> si un puerto falla, otro toma su carga.</div></div>
+<div class="tip"><div class="ti">🟢</div><div class="tt"><strong>Backup entre fibras:</strong> OPT 3/4 respaldan OPT 1/2 automáticamente.</div></div>
+<div class="row" style="margin-top:8px"><span class="rl">Test de backup</span><span class="rv">Sin desconectar cables</span></div>
+<div class="row"><span class="rl">Datos post-corte de luz</span><span class="rv">✓ Se restauran automáticamente</span></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>✨ Procesamiento y calidad</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Motor de imagen</span><span class="rv">SuperView III</span></div>
+<div class="row"><span class="rl">Escalado</span><span class="rv">Stepless output scaling</span></div>
+<div class="row"><span class="rl">Modos scaling</span><span class="rv">Full screen / Pixel to pixel / Custom</span></div>
+<div class="row"><span class="rl">Calibración</span><span class="rv">Pixel a pixel (con NovaLCT)</span></div>
+<div class="row"><span class="rl">Color</span><span class="rv">Brillo / saturación / contraste / hue</span></div>
+<div class="row"><span class="rl">Free topology</span><span class="rv">✓ Sin preocuparse por áreas vacías</span></div>
+<div class="row"><span class="rl">EDID management</span><span class="rv">✓ Import / export</span></div>
+</div></div>
+<div class="acc"><div class="ah" onclick="tog(this)"><h3>🌐 Sincronización y control</h3><span class="ar">▼</span></div>
+<div class="ab">
+<div class="row"><span class="rl">Output sync</span><span class="rv">Interna o GENLOCK externo</span></div>
+<div class="row"><span class="rl">GENLOCK</span><span class="rv">Bi-level y tri-level</span></div>
+<div class="row"><span class="rl">Cascada de unidades</span><span class="rv">✓ Todas en sync</span></div>
+<div class="row"><span class="rl">Light sensor</span><span class="rv">✓ Ajuste auto de brillo</span></div>
+<div class="row"><span class="rl">RS232</span><span class="rv">Control centralizado externo</span></div>
+</div></div>
+</div>
+
+<!-- LATENCIA -->
+<div class="sec" id="s-latencia">
+<div class="card" style="border-color:var(--a3)">
+<div class="ch"><div class="ci" style="background:#d1fae5">⚡</div><div><div class="ct">Tabla de Latencia</div><div class="cs">¿Cuántos frames de delay tiene tu setup?</div></div></div>
+<p style="font-size:12px;color:var(--s);margin-bottom:14px;line-height:1.7">La latencia depende del modo de trabajo y si tenés low latency activado. Esta tabla te dice exactamente cuántos frames de delay tenés en cada configuración.</p>
+<div style="background:var(--card2);border-radius:10px;overflow:hidden;border:1px solid var(--b)">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--a);color:#fff;padding:10px;font-size:11px;font-weight:700;text-align:center">
+<span>Modo</span><span>Low Latency</span><span>Normal</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:10px;font-size:12px;text-align:center;border-bottom:1px solid var(--b)">
+<span style="font-weight:600">Video Controller</span><span style="color:var(--a3);font-weight:700">1~2 frames</span><span style="color:var(--w)">2~3 frames</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:10px;font-size:12px;text-align:center;border-bottom:1px solid var(--b)">
+<span style="font-weight:600">ByPass</span><span style="color:var(--a3);font-weight:700">0 frames ⭐</span><span style="color:var(--a3)">1 frame</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:10px;font-size:12px;text-align:center">
+<span style="font-weight:600">Fiber Converter</span><span style="color:var(--a3);font-weight:700" colspan="2">0 frames siempre</span><span style="color:var(--a3)">—</span>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#fef3c7">⚠️</div><div><div class="ct">Restricciones de Low Latency</div></div></div>
+<div class="tip"><div class="ti">📐</div><div class="tt"><strong>Para activar low latency:</strong> todos los gabinetes cargados por los puertos Ethernet deben estar alineados en la parte superior del rectángulo circunscrito.</div></div>
+<div class="tip"><div class="ti">🚫</div><div class="tt"><strong>ByPass + Low Latency + Genlock:</strong> en modo ByPass, low latency y Genlock son mutuamente excluyentes. En modo Video Controller sí son compatibles.</div></div>
+</div>
+</div>
+
+<!-- SPECS -->
+<div class="sec" id="s-specs">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dbeafe">📋</div><div><div class="ct">Especificaciones Técnicas</div><div class="cs">VX2000 Pro — Tabla completa</div></div></div>
+<div class="row"><span class="rl">Modelo</span><span class="rv">VX2000 Pro</span></div>
+<div class="row"><span class="rl">Tipo</span><span class="rv">All-in-One Controller</span></div>
+<div class="row"><span class="rl">Carga máxima</span><span class="rv">13,000,000 px</span></div>
+<div class="row"><span class="rl">Ancho máximo salida</span><span class="rv">16,384 px</span></div>
+<div class="row"><span class="rl">Alto máximo salida</span><span class="rv">8,192 px</span></div>
+<div class="row"><span class="rl">Capas</span><span class="rv">12 × 2K×1K</span></div>
+<div class="row"><span class="rl">Presets</span><span class="rv">256</span></div>
+<div class="row"><span class="rl">Puertos RJ45 salida</span><span class="rv">20x Gigabit</span></div>
+<div class="row"><span class="rl">Puertos OPT</span><span class="rv">4x 10G fibra</span></div>
+<div class="row"><span class="rl">Alimentación</span><span class="rv">100–240V~ 50/60Hz</span></div>
+<div class="row"><span class="rl">Consumo</span><span class="rv">82 W</span></div>
+<div class="row"><span class="rl">Temp. operación</span><span class="rv">0°C a 50°C</span></div>
+<div class="row"><span class="rl">Humedad operación</span><span class="rv">5–85% RH</span></div>
+<div class="row"><span class="rl">Dimensiones</span><span class="rv">482.6 × 409.0 × 94.6 mm</span></div>
+<div class="row"><span class="rl">Peso neto</span><span class="rv">7 kg</span></div>
+<div class="row"><span class="rl">Ruido @ 25°C</span><span class="rv">45 dB(A)</span></div>
+</div>
+</div>
+
+<!-- BUSCAR -->
+<div class="sec" id="s-buscar">
+<div class="sbox"><input type="text" id="si" placeholder="Buscar: resolución, latencia, OPT, USB, mosaic..." oninput="doSearch()"></div>
+<div id="sres"><div style="text-align:center;color:var(--s);padding:40px;font-size:13px">🔍 Escribí algo para buscar</div></div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="s-quiz">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#d1fae5">🎯</div><div><div class="ct">Quiz VX2000 Pro Expert</div><div class="cs" id="qsub">10 preguntas · ¿Cuánto sabés?</div></div></div>
+<div class="qbar"><div class="qbf" id="qbar" style="width:0%"></div></div>
+<div id="qcont"></div>
+</div>
+</div>
+
+<footer>Desarrollado por <strong>Juanseled</strong> · NovaStar VX2000 Pro v1.0.1 · La guía que todo técnico LED necesita</footer>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-'+id).classList.add('on');
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  window.scrollTo(0,0);
+}
+function tog(h){h.parentElement.classList.toggle('op')}
+
+// NECESITO
+const nA={};
+function sN(k,v,btn){
+  nA[k]=v;
+  btn.closest('.card').querySelectorAll('.nqb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const nx={need:'nq2',px:null};
+  if(nx[k]){const el=document.getElementById(nx[k]);el.style.opacity='1';el.style.pointerEvents='all';}
+  if(k==='px') showNR();
+}
+function showNR(){
+  const {need,px}=nA;
+  let modo,why,tip;
+  if(need==='bypass'){modo='ByPass';why='Necesitás latencia 0. ByPass elimina todo el procesamiento y la imagen llega instantánea a la pantalla.';tip='Recordá: en ByPass no tenés capas ni presets. Es señal directa.';}
+  else if(need==='fiber'){modo='Fiber Converter';why='Para extender señal por fibra entre el controlador principal y la pantalla.';tip='Conectá la fibra del controlador principal a OPT 1/2 del VX2000 Pro en modo Fiber Converter.';}
+  else{modo='Video Controller';why='El modo completo con capas, presets, color y control total.';tip='Podés activar low latency para reducir el delay a 1~2 frames.';}
+  let warning='';
+  if(px==='xlarge'){warning='<div class="err" style="margin-top:10px"><strong>⚠️ Atención:</strong> Tu pantalla supera los 13M px del VX2000 Pro. Considerá el H5 con H_4xfiber que llega a 20.8M px.</div>';}
+  document.getElementById('nq-body').innerHTML=`
+    <div class="row"><span class="rl">🔄 Modo recomendado</span><span class="rv">${modo}</span></div>
+    <p style="font-size:11px;color:var(--s);padding:6px 0 10px;border-bottom:1px solid var(--b)">${why}</p>
+    <div class="tip" style="margin-top:8px"><div class="ti">💡</div><div class="tt">${tip}</div></div>
+    ${warning}`;
+  document.getElementById('nq-res').style.display='block';
+  document.getElementById('nq-res').scrollIntoView({behavior:'smooth'});
+}
+function resetN(){
+  Object.keys(nA).forEach(k=>delete nA[k]);
+  document.getElementById('nq2').style.opacity='.3';
+  document.getElementById('nq2').style.pointerEvents='none';
+  document.querySelectorAll('.nqb').forEach(b=>b.classList.remove('sel'));
+  document.getElementById('nq-res').style.display='none';
+}
+
+// SEARCH
+const SD=[
+  {t:'Resolución máxima HDMI 2.0',d:'4096×2160@60Hz. HDCP 1.4 y 2.2. Compatible con HDMI 1.4 y 1.3.'},
+  {t:'Resolución máxima DP 1.2',d:'4096×2160@60Hz. HDCP 1.3. Custom: hasta 8192×1080.'},
+  {t:'Resolución máxima HDMI 1.3',d:'1920×1080@60Hz. Solo 8-bit. HDCP 1.4.'},
+  {t:'Resolución máxima 12G-SDI',d:'4096×2160@60Hz. Compatible con 12G/6G/3G/HD/SD-SDI. Con loop out.'},
+  {t:'Carga máxima del VX2000 Pro',d:'13,000,000 píxeles. Ancho máx: 16,384 px. Alto máx: 8,192 px.'},
+  {t:'Capas máximas',d:'12 capas de 2K×1K. Una capa 4K×2K usa 4 recursos, una 4K×1K usa 2.'},
+  {t:'Presets',d:'256 presets. Se cargan con un botón. Podés ver preview en Unico web.'},
+  {t:'Latencia Video Controller',d:'Low latency: 1~2 frames. Normal: 2~3 frames.'},
+  {t:'Latencia ByPass',d:'Low latency: 0 frames. Normal: 1 frame.'},
+  {t:'Latencia Fiber Converter',d:'Siempre 0 frames.'},
+  {t:'Modos de trabajo',d:'Video Controller, Fiber Converter y ByPass.'},
+  {t:'OPT 1/2 auto-adaptativo',d:'Detecta automáticamente si es entrada o salida según el dispositivo conectado.'},
+  {t:'OPT 3/4',d:'OPT 3 copia/respalda puertos 1~10. OPT 4 copia/respalda puertos 11~20.'},
+  {t:'USB reproducción',d:'MP4, H.264/H.265, hasta 3840×2160. Formatos: jpg, png, bmp. NTFS/FAT32/exFAT.'},
+  {t:'Mosaic HDMI',d:'2x HDMI 2.0 o 4x HDMI 1.3. Resolución máxima de mosaic: 4K×2K.'},
+  {t:'Mosaic fibra',d:'OPT 1/2 pueden combinarse para crear una fuente mosaic.'},
+  {t:'Backup End-to-End',d:'Backup entre devices, fuentes, puertos Ethernet y puertos de fibra.'},
+  {t:'Datos post-corte de luz',d:'Al restaurar la energía, el equipo recupera automáticamente la configuración previa.'},
+  {t:'Bloqueo de panel',d:'Knob + BACK 3 segundos = bloquea/desbloquea los botones del frente.'},
+  {t:'GENLOCK',d:'Bi-level y tri-level. Compatible con Video Controller. En ByPass es mutuamente excluyente con low latency.'},
+  {t:'Light sensor',d:'Puerto trasero para sensor de luz. Ajusta el brillo automáticamente según el ambiente.'},
+  {t:'3D función',d:'Puerto 3D directo para emisores de terceros, o EMT200 por Ethernet. Activa 3D reduce capacidad a la mitad.'},
+  {t:'Consumo eléctrico',d:'82W. 100-240V~ 50/60Hz.'},
+  {t:'Dimensiones y peso',d:'482.6×409.0×94.6 mm. 7 kg neto. Viene en maletín de 625×560×195mm.'},
+  {t:'Temperatura operación',d:'0°C a 50°C. Humedad 5-85% RH.'},
+  {t:'Formas de control',d:'Knob frontal, Unico web page, NovaLCT, VICP app.'},
+  {t:'RS232',d:'3 pines: RX, TX, G. Para control centralizado externo.'},
+  {t:'Por puerto RJ45',d:'650,000 píxeles @ 8-bit. 20 puertos en total.'},
+  {t:'Free topology',d:'Configuración flexible sin preocuparse por áreas vacías al calcular la carga de cada puerto.'},
+  {t:'SuperView III',d:'Motor de procesamiento de imagen para escalado stepless sin pérdida de calidad.'},
+];
+function doSearch(){
+  const q=document.getElementById('si').value.toLowerCase().trim();
+  const d=document.getElementById('sres');
+  if(!q){d.innerHTML='<div style="text-align:center;color:var(--s);padding:40px">🔍 Escribí algo para buscar</div>';return;}
+  const f=SD.filter(x=>x.t.toLowerCase().includes(q)||x.d.toLowerCase().includes(q));
+  d.innerHTML=f.length?f.map(x=>`<div class="sr"><h4>${x.t}</h4><p>${x.d}</p></div>`).join(''):'<div style="text-align:center;color:var(--s);padding:20px">😕 Sin resultados para "'+q+'"</div>';
+}
+
+// QUIZ
+const QS=[
+  {q:'¿Cuántos píxeles puede manejar el VX2000 Pro?',o:['8 millones','10 millones','13 millones','20 millones'],c:2,e:'El VX2000 Pro maneja hasta 13 millones de píxeles con sus 20 puertos Ethernet.'},
+  {q:'¿Cuál es la latencia del VX2000 Pro en modo ByPass con low latency?',o:['3 frames','1~2 frames','1 frame','0 frames'],c:3,e:'En modo ByPass con low latency la latencia es 0 frames — perfecta sincronía con audio.'},
+  {q:'¿Cuántas capas máximas soporta el VX2000 Pro?',o:['6','8','12','16'],c:2,e:'Soporta 12 capas de 2K×1K. Una capa 4K×2K usa 4 recursos de capa.'},
+  {q:'Los puertos OPT 1 y OPT 2 del VX2000 Pro son...',o:['Solo entrada','Solo salida','Auto-adaptativos','Solo para fibra monomodo'],c:2,e:'OPT 1/2 son auto-adaptativos — detectan solos si son entrada o salida según el dispositivo conectado.'},
+  {q:'¿Cuántos presets puede almacenar el VX2000 Pro?',o:['64','128','256','512'],c:2,e:'Hasta 256 presets. Se cargan con un solo botón desde el panel frontal.'},
+  {q:'¿Qué pasa si activás la función 3D?',o:['Sube la resolución','La latencia llega a 0','Se reduce la capacidad de salida a la mitad','Se desactivan las capas'],c:2,e:'Activar 3D reduce la capacidad de salida del VX2000 Pro exactamente a la mitad.'},
+  {q:'¿Cuál es la resolución máxima de entrada del HDMI 1.3?',o:['4096×2160@60Hz','3840×2160@60Hz','2048×1152@60Hz','1920×1080@60Hz'],c:3,e:'El HDMI 1.3 soporta hasta 1920×1080@60Hz con solo 8-bit de profundidad.'},
+  {q:'¿Cómo bloqueás el panel frontal del VX2000 Pro?',o:['Presionando FREEZE 5s','Presionando PRESET+TEST','Knob + BACK por 3 segundos','Desde el menú Settings'],c:2,e:'Mantené presionados knob + BACK simultáneamente por 3 o más segundos para bloquear/desbloquear el panel.'},
+  {q:'El modo Fiber Converter del VX2000 Pro tiene una latencia de...',o:['3 frames','1~2 frames','1 frame','0 frames siempre'],c:3,e:'En modo Fiber Converter la latencia siempre es 0 frames, sin importar si low latency está activado o no.'},
+  {q:'¿Qué formato de video acepta la reproducción USB del VX2000 Pro?',o:['AVI','MKV','MP4','MOV'],c:2,e:'Solo acepta MP4 con codificación H.264 (máx 4K@30fps) o H.265 (máx 4K@60fps).'},
+];
+let qi=0,sc=0,ans=false;
+function rQ(){
+  if(qi>=QS.length){
+    const p=Math.round(sc/QS.length*100);
+    const e=p>=80?'🏆 Experto VX2000 Pro':p>=60?'😎 Técnico Avanzado':'📚 Seguí estudiando';
+    document.getElementById('qcont').innerHTML=`<div style="text-align:center;padding:10px"><div style="font-size:40px;margin-bottom:8px">${p>=80?'🏆':p>=60?'😎':'📚'}</div><div style="font-size:32px;font-weight:900;color:var(--a)">${sc}/${QS.length}</div><div style="font-size:13px;color:var(--s);margin:6px 0 16px">${e} — ${p}%</div><button onclick="rSQ()" style="width:100%;padding:13px;background:var(--a3);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:800;cursor:pointer">🔄 Intentar de nuevo</button></div>`;
+    document.getElementById('qbar').style.width='100%';
+    return;
+  }
+  const q=QS[qi];
+  document.getElementById('qsub').textContent=`Pregunta ${qi+1} de ${QS.length}`;
+  document.getElementById('qbar').style.width=(qi/QS.length*100)+'%';
+  ans=false;
+  document.getElementById('qcont').innerHTML=`<p style="font-size:13px;font-weight:700;margin-bottom:14px;line-height:1.5">${q.q}</p>${q.o.map((o,i)=>`<button class="qo" onclick="aQ(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<div class="qfb" id="qfb">💡 ${q.e}</div><button id="qnx" style="display:none;width:100%;margin-top:10px;padding:11px;background:var(--a3);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer" onclick="nQ()">Siguiente →</button>`;
+}
+function aQ(i){
+  if(ans)return;ans=true;
+  const q=QS[qi];
+  document.querySelectorAll('.qo').forEach((o,idx)=>{
+    if(idx===q.c)o.classList.add('ok');
+    else if(idx===i&&i!==q.c)o.classList.add('no');
+    o.style.cursor='default';
+  });
+  if(i===q.c)sc++;
+  document.getElementById('qfb').style.display='block';
+  document.getElementById('qnx').style.display='block';
+}
+function nQ(){qi++;rQ();}
+function rSQ(){qi=0;sc=0;rQ();}
+rQ();
+</script>
+</body>
+</html>
